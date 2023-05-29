@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const auth = require("./routes/auth");
+const logistik = require("./routes/logistik");
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,3 +17,4 @@ app.listen(port, () => {
 });
 
 app.use("/auth", auth);
+app.use("/logistik", logistik);
