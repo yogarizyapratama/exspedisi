@@ -1,0 +1,301 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "api exspedisi",
+    "description": "back end test",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication"
+    },
+    {
+      "name": "logistik",
+      "description": "Logistik"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Membuat akun baru",
+        "description": "Endpoint untuk membuat akun baru",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msisdn": {
+                    "type": "string",
+                    "description": "Nomor MSISDN"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Username pengguna"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Nama pengguna"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password pengguna"
+                  }
+                },
+                "required": ["msisdn", "username", "name", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Akun berhasil dibuat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Pesan sukses"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login pengguna",
+        "description": "Endpoint untuk login pengguna",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msisdn": {
+                    "type": "string",
+                    "description": "Nomor MSISDN pengguna"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password pengguna"
+                  }
+                },
+                "required": ["msisdn", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Berhasil login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jwt": {
+                      "type": "string",
+                      "description": "Token JWT"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "summary": "Mendapatkan data user",
+        "description": "Endpoint untuk mendapatkan data user berdasarkan ID JWT",
+        "tags": ["auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data user berhasil ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msisdn": {
+                      "type": "string",
+                      "description": "Nomor MSISDN"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username pengguna"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nama pengguna"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logistik/kurir-rate": {
+      "get": {
+        "summary": "Mendapatkan data logistik",
+        "description": "Endpoint untuk mendapatkan data logistik",
+        "tags": ["logistik"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data logistik berhasil ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Menambah data baru ke logistik",
+        "description": "Endpoint untuk menambah data baru ke logistik",
+        "tags": ["logistik"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "logistic_name": {
+                    "type": "string",
+                    "description": "Nama logistik"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Jumlah"
+                  },
+                  "destination_name": {
+                    "type": "string",
+                    "description": "Nama tujuan"
+                  },
+                  "origin_name": {
+                    "type": "string",
+                    "description": "Nama asal"
+                  },
+                  "duration": {
+                    "type": "string",
+                    "description": "Durasi"
+                  }
+                },
+                "required": ["logistic_name", "amount", "destination_name", "origin_name", "duration"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data berhasil ditambah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Pesan sukses"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logistik/kurir-rate/params": {
+      "get": {
+        "summary": "Mendapatkan data logistik berdasarkan parameter",
+        "description": "Endpoint untuk mendapatkan data logistik berdasarkan parameter",
+        "tags": ["logistik"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "destination_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Nama tujuan"
+          },
+          {
+            "in": "query",
+            "name": "origin_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Nama asal"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data logistik berhasil ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

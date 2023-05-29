@@ -5,7 +5,7 @@ const JWT = require("../middleware/authentication");
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/login",
   [
     body("msisdn").notEmpty().isNumeric(),
@@ -13,7 +13,6 @@ router.get(
   ],
   controller.Login
 );
-
 router.post(
   "/register",
   [
@@ -24,7 +23,6 @@ router.post(
   ],
   controller.Register
 );
-
 router.get("/user", JWT.VerifyToken, controller.User);
 
 module.exports = router;
